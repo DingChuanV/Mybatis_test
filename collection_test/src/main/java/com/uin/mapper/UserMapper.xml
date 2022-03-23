@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.uin.mapper.UserMapper">
+    <!--一对多 根据id查询用户及其关联的订单信息：嵌套查询-->
+    <!--    <resultMap id="userAndOrder1" type="com.uin.pojo.User">-->
+    <!--        <id property="id" column="id"/>-->
+    <!--        <result property="name" column="name"/>-->
+    <!--        <result property="pwd" column="pwd"/>-->
+    <!--        <collection property="orders" column="id"-->
+    <!--                    ofType="com.uin.pojo.Order"-->
+    <!--                    select="com.uin.mapper.OrderMapper.selectOrderById"-->
+    <!--                    />-->
+    <!--    </resultMap>-->
+    <!--==========================================================-->
+    <!--联合查询-->
+    <resultMap id="userAndOrder2" type="com.uin.pojo.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+        <collection property="orders" ofType="com.uin.pojo.Order">
+            <id property="id" column="id"/>
+            <result property="ordernum" column="ordernum"/>
+        </collection>
+    </resultMap>
+
+    <!--    <select id="selectUserOrderById1" resultMap="userAndOrder1">-->
+    <!--        select *-->
+    <!--        from mybatis.user-->
+    <!--        where id = #{id};-->
+    <!--    </select>-->
+    <select id="selectUserOrderById2" resultMap="userAndOrder2">
+        select u.*, o.id,o.ordernum
+        from mybatis.user as u,
+             mybatis.order as o
+        where u.id = o.userId
+          and u.id = #{id}
+    </select>
+</mapper>
