@@ -1,0 +1,3 @@
+# Project exclude paths
+/association_test/target/
+/collection_test/target/

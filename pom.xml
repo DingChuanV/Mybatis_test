@@ -11,6 +11,7 @@
     <modules>
         <module>association_test</module>
         <module>collection_test</module>
+        <module>many_to_many</module>
     </modules>
 
     <properties>
